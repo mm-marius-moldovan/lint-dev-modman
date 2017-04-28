@@ -1,0 +1,30 @@
+#!/usr/bin/env php
+<?php
+
+/**
+ * Class Linter
+ */
+class Linter {
+
+    /**
+     * configure path here
+     */
+    const PATH = '';
+
+    /**
+     * Linter constructor.
+     */
+    public function __construct()
+    {
+        $this->run();
+    }
+
+    public function run() {
+        chdir(__DIR__);
+        $dir = $this::PATH;
+        print "Running \r\n";
+        print (`php phpcs.phar --extensions=php --ignore=../lint-dev-modman/*,../code-linter/* --standard=EcgM2 ../$dir`);
+        print (`php phpmd.phar ../$dir text phpmd-rules.xml`);
+    }
+}
+new Linter();

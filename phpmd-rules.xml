@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright © 2016. MindMagnet
+  ~ @author Marius Moldovan <marius.moldovan@mindmagnetsoftware.com
+  -->
+
+<ruleset name="My first PHPMD rule set" xmlns="http://pmd.sf.net/ruleset/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0"
+         xsi:noNamespaceSchemaLocation="http://pmd.sf.net/ruleset_xml_schema.xsd">
+    <description>
+        My custom rule set that checks my code...
+    </description>
+
+    <!-- Import the entire unused code rule set -->
+    <rule ref="rulesets/unusedcode.xml/UnusedPrivateField" />
+
+    <!-- evil exit expression checking -->
+    <rule ref="rulesets/design.xml/ExitExpression"/>
+
+    <!-- evil eval expression checking -->
+    <rule ref="rulesets/design.xml/EvalExpression"/>
+
+    <!-- Goto makes code harder to read and it is nearly impossible to understand the -->
+    <!-- control flow of an application -->
+    <rule ref="rulesets/design.xml/GotoStatement"/>
+
+    <!-- A class with an excessive number of children is an indicator for an unbalanced class hierarchy. -->
+    <rule ref="rulesets/design.xml/NumberOfChildren">
+        <priority>2</priority>
+        <properties>
+            <property name="minimum" value="8" description="Maximum number of acceptable child classes." />
+        </properties>
+    </rule>
+
+    <!-- A class with many parents is an indicator for an unbalanced and wrong class hierarchy -->
+    <rule ref="rulesets/design.xml/DepthOfInheritance">
+        <priority>2</priority>
+        <properties>
+            <property name="minimum" value="6" description="Maximum number of acceptable parent classes." />
+        </properties>
+    </rule>
+
+    <!-- A class with too many dependencies has negative impacts on several quality aspects of a class -->
+    <rule ref="rulesets/design.xml/CouplingBetweenObjects">
+        <priority>2</priority>
+        <properties>
+            <property name="minimum" value="13" description="Maximum number of acceptable dependencies." />
+        </properties>
+    </rule>
+
+    <!-- debugging leftovers -->
+    <rule ref="rulesets/design.xml/DevelopmentCodeFragment">
+        <priority>2</priority>
+        <properties>
+            <property name="unwanted-functions" value="var_dump,print_r,debug_zval_dump,debug_print_backtrace" description="Comma separated list of suspect function images." />
+        </properties>
+    </rule>
+
+    <!--
+        Complexity is determined by the number of decision points in a method plus one for the method entry
+        1-4 is low complexity, 5-7 indicates moderate complexity, 8-10 is high complexity, and 11+ is very high complexity.
+    -->
+    <rule ref="rulesets/codesize.xml/CyclomaticComplexity">
+        <priority>1</priority>
+        <properties>
+            <property name="reportLevel" value="6" description="The Cyclomatic Complexity reporting threshold"/>
+        </properties>
+    </rule>
+
+    <!--
+        A class with too many methods is probably a good suspect for refactoring, in
+        order to reduce its complexity and find a way to have more fine grained objects.
+    -->
+    <rule ref="rulesets/codesize.xml/TooManyMethods">
+        <priority>3</priority>
+        <properties>
+            <property name="maxmethods" description="The method count reporting threshold" value="25"/>
+            <property name="ignorepattern" description="Ignore methods matching this regex" value="(^(set|get))i"/>
+        </properties>
+    </rule>
+
+    <!-- A large number of methods also means that this class has a greater potential impact on derived classes. -->
+    <rule ref="rulesets/codesize.xml/ExcessiveClassComplexity">
+        <priority>3</priority>
+        <properties>
+            <property name="maximum" description="The maximum WMC tolerable for a class." value="50"/>
+        </properties>
+    </rule>
+</ruleset>
